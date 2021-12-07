@@ -56,6 +56,7 @@ export class AppComponent {
     if (index !== -1) {
       this.todos.splice(index, 1);
     }
+    this.save();
   }
 
   markAsDone(todo: Todo) {

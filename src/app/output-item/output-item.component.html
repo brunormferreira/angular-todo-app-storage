@@ -1,0 +1,19 @@
+<!-- <label for="item-input">Add an item:</label>
+<input type="text" id="item-input" #serverContentInput />
+<button (click)="addNewItem(newItem.value)">Add to parent's list</button> -->
+
+<div>
+  <label>Server Name</label>
+  <!-- <input type="text" class="form-control" [(ngModel)]="newServerName"> -->
+  <input type="text" class="form-control" #serverNameInput />
+  <label>Server Content</label>
+  <!-- <input type="text" class="form-control" [(ngModel)]="newServerContent"> -->
+  <input type="text" class="form-control" #serverContentInput />
+  <br />
+  <button class="btn btn-primary" (click)="onAddServer(serverNameInput)">
+    Add Server
+  </button>
+  <button class="btn btn-primary" (click)="onAddBlueprint(serverNameInput)">
+    Add Server Blueprint
+  </button>
+</div>

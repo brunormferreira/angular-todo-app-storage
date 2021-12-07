@@ -1,17 +1,4 @@
 <h1>{{ title }}</h1>
-<ul>
-  <p *ngIf="todos.length === 0">
-    <small>Não tem nenhuma tarefa para hoje!</small>
-  </p>
-  <li *ngFor="let todo of todos">
-    <span [ngClass]="{ 'todo-complete': todo.done }">
-      {{ todo.id }}. {{ todo.title }}
-    </span>
-    | <button *ngIf="!todo.done" (click)="markAsDone(todo)">Concluir</button> |
-    <button *ngIf="todo.done" (click)="markAsUndone(todo)">Refazer</button> |
-    <button (click)="remove(todo)">Remover</button>
-  </li>
-</ul>
 
 <form [formGroup]="form">
   <fieldset>
@@ -28,3 +15,37 @@
     <button [disabled]="form.invalid" (click)="add()">Salvar</button>
   </fieldset>
 </form>
+
+<ul>
+  <p *ngIf="todos.length === 0">
+    <small>Não tem nenhuma tarefa para hoje!</small>
+  </p>
+  <li *ngFor="let todo of todos">
+    <span [ngClass]="{ 'todo-complete': todo.done }">
+      {{ todo.id }}. {{ todo.title }}
+    </span>
+    | <button *ngIf="!todo.done" (click)="markAsDone(todo)">Concluir</button> |
+    <button *ngIf="todo.done" (click)="markAsUndone(todo)">Refazer</button> |
+    <button (click)="remove(todo)">Remover</button>
+  </li>
+</ul>
+
+<hr />
+
+<!-- EXAMPLE ABOUT @OUTPUT -> CHILD TO PARENT EVENT -->
+<!-- <app-output-item (newItemEvent)="addItem($event)"></app-output-item>
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul> -->
+
+<app-output-item
+  (serverCreated)="onServerAdded($event)"
+  (bpCreated)="onBlueprintAdded($event)"
+></app-output-item>
+<ul>
+  <li *ngFor="let server of serverElements" class="flex-col">
+    <span>Type: {{ server.type }} - </span>
+    <span>Name: {{ server.name }} - </span>
+    <span>Content: {{ server.content }}</span>
+  </li>
+</ul>

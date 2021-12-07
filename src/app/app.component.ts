@@ -17,6 +17,10 @@ export class AppComponent {
   public title: string = 'Minhas tarefas';
   public form: FormGroup;
 
+  serverElements = [
+    { type: 'server', name: 'Testserver', content: 'Just a test!' },
+  ];
+
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       title: [
@@ -31,6 +35,25 @@ export class AppComponent {
 
     this.load();
     // this.form.statusChanges.subscribe((status) => console.log(status));
+  }
+
+  onServerAdded(serverData: { serverName: string; serverContent: string }) {
+    this.serverElements.push({
+      type: 'server',
+      name: serverData.serverName,
+      content: serverData.serverContent,
+    });
+  }
+
+  onBlueprintAdded(blueprintData: {
+    serverName: string;
+    serverContent: string;
+  }) {
+    this.serverElements.push({
+      type: 'blueprint',
+      name: blueprintData.serverName,
+      content: blueprintData.serverContent,
+    });
   }
 
   get formValues(): { [key: string]: AbstractControl } {

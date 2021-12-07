@@ -51,20 +51,27 @@ export class AppComponent {
     this.clear();
   }
 
-  remove(todo: Todo) {
-    const index = this.todos.indexOf(todo);
+  remove(todo: Todo): void {
+    const index = this.getTodoIndex(todo);
     if (index !== -1) {
       this.todos.splice(index, 1);
     }
     this.save();
   }
 
-  markAsDone(todo: Todo) {
+  // update(todo: any): void {
+  //   const index = this.getTodoIndex(todo);
+
+  //   this.todos[index].title = this.formValues['title'].value;
+  //   this.save();
+  // }
+
+  markAsDone(todo: Todo): void {
     todo.done = true;
     this.save();
   }
 
-  markAsUndone(todo: Todo) {
+  markAsUndone(todo: Todo): void {
     todo.done = false;
     this.save();
   }
@@ -73,15 +80,19 @@ export class AppComponent {
     this.form.reset();
   }
 
-  save() {
+  save(): void {
     const data = JSON.stringify(this.todos);
     localStorage.setItem('todos', data);
   }
 
-  load() {
+  load(): void {
     const data = localStorage.getItem('todos');
     if (data) {
       this.todos = JSON.parse(data);
     }
+  }
+
+  getTodoIndex(todo: Todo): number {
+    return this.todos.indexOf(todo);
   }
 }

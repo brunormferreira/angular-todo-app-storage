@@ -46,7 +46,13 @@ export class AppComponent {
     const title = this.formValues['title'].value;
     const id = this.todos.length + 1;
 
-    this.todos.push(new Todo(id, title, false));
+    const payload = {
+      id,
+      title,
+      done: false,
+    };
+
+    this.todos.push(payload);
     this.save();
     this.clear();
   }

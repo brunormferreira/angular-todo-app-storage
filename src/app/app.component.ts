@@ -29,11 +29,8 @@ export class AppComponent {
       ],
     });
 
-    this.form.statusChanges.subscribe((status) => console.log(status));
-
-    this.todos.push(new Todo(1, 'Comprar pão', false));
-    this.todos.push(new Todo(2, 'Comprar queijo', true));
-    this.todos.push(new Todo(3, 'Comprar presunto', false));
+    this.load();
+    // this.form.statusChanges.subscribe((status) => console.log(status));
   }
 
   get formValues(): { [key: string]: AbstractControl } {
@@ -50,6 +47,7 @@ export class AppComponent {
     const id = this.todos.length + 1;
 
     this.todos.push(new Todo(id, title, false));
+    this.save();
     this.clear();
   }
 
@@ -62,13 +60,27 @@ export class AppComponent {
 
   markAsDone(todo: Todo) {
     todo.done = true;
+    this.save();
   }
 
   markAsUndone(todo: Todo) {
     todo.done = false;
+    this.save();
   }
 
   clear(): void {
     this.form.reset();
+  }
+
+  save() {
+    const data = JSON.stringify(this.todos);
+    localStorage.setItem('todos', data);
+  }
+
+  load() {
+    const data = localStorage.getItem('todos');
+    if (data) {
+      this.todos = JSON.parse(data);
+    }
   }
 }

@@ -5,7 +5,7 @@ import { Todo } from 'src/app/models/todo.model';
   providedIn: 'root',
 })
 export class TodoService {
-  todos: Todo[] = [{ id: 1, title: 'data from storage', done: false }];
+  todos: Todo[] = [];
   storageName: string = 'todos';
 
   constructor() {}

@@ -22,4 +22,12 @@ export class TodoCountComponent implements OnInit {
 
     return dataLength;
   }
+
+  showConcludeMessage(): boolean {
+    if (this.todos.length === 0) return false;
+
+    const isValid: boolean = this.doneTodosCount() === this.todos.length;
+
+    return !!isValid;
+  }
 }

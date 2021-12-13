@@ -6,4 +6,8 @@
   <h2>
     Total de tarefas concluídas: {{ doneTodosCount() }}/{{ todos?.length }}
   </h2>
+
+  <p *ngIf="showConcludeMessage()">
+    Parabéns! Você concluiu todas as suas tarefas!
+  </p>
 </div>

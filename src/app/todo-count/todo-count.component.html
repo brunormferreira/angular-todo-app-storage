@@ -1,0 +1,9 @@
+<div>
+  <p *ngIf="todos.length === 0">
+    <small>Não há nenhuma tarefa para hoje!</small>
+  </p>
+
+  <h2>
+    Total de tarefas concluídas: {{ doneTodosCount() }}/{{ todos?.length }}
+  </h2>
+</div>

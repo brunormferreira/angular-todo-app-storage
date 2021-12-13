@@ -1,0 +1,10 @@
+<ul>
+  <li>
+    <span [ngClass]="{ 'todo-complete': todo.done }">
+      {{ todo.id }}. {{ todo.title }}
+    </span>
+    | <button *ngIf="!todo.done" (click)="onMarkAsDone()">Concluir</button> |
+    <button *ngIf="todo.done" (click)="onMarkAsUndone()">Refazer</button> |
+    <button (click)="onRemove()">Remover</button>
+  </li>
+</ul>

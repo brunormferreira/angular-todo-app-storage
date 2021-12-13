@@ -1,23 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Todo } from 'src/models/todo.model';
+import { Todo } from 'src/app/models/todo.model';
+import { TodoService } from './services/todo.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
-  public todos: Todo[] = [];
-  public title: string = 'Minhas tarefas';
-  public form: FormGroup;
+export class AppComponent implements OnInit {
+  todos: Todo[] = [];
+  title: string = 'Minhas tarefas';
+  form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private todoService: TodoService) {
     this.form = this.fb.group({
       title: [
         '',
@@ -29,8 +30,11 @@ export class AppComponent {
       ],
     });
 
-    this.load();
-    // this.form.statusChanges.subscribe((status) => console.log(status));
+    this.todoService.load();
+  }
+
+  ngOnInit(): void {
+    this.todos = this.todoService.getTodos();
   }
 
   get formValues(): { [key: string]: AbstractControl } {
@@ -42,9 +46,9 @@ export class AppComponent {
       return;
     }
 
-    // const title = this.form.get('title')?.value;
+    const storageLength = this.todoService.getTodos().length;
     const title = this.formValues['title'].value;
-    const id = this.todos.length + 1;
+    const id = storageLength + 1;
 
     const payload = {
       id,
@@ -52,53 +56,25 @@ export class AppComponent {
       done: false,
     };
 
-    this.todos.push(payload);
-    this.save();
+    this.todos = this.todoService.post(payload);
     this.clear();
   }
 
   remove(todo: Todo): void {
-    const index = this.getTodoIndex(todo);
-    if (index !== -1) {
-      this.todos.splice(index, 1);
-    }
-    this.save();
+    this.todos = this.todoService.delete(todo);
   }
-
-  // update(todo: any): void {
-  //   const index = this.getTodoIndex(todo);
-
-  //   this.todos[index].title = this.formValues['title'].value;
-  //   this.save();
-  // }
 
   markAsDone(todo: Todo): void {
     todo.done = true;
-    this.save();
+    this.todoService.save();
   }
 
   markAsUndone(todo: Todo): void {
     todo.done = false;
-    this.save();
+    this.todoService.save();
   }
 
   clear(): void {
     this.form.reset();
-  }
-
-  save(): void {
-    const data = JSON.stringify(this.todos);
-    localStorage.setItem('todos', data);
-  }
-
-  load(): void {
-    const data = localStorage.getItem('todos');
-    if (data) {
-      this.todos = JSON.parse(data);
-    }
-  }
-
-  getTodoIndex(todo: Todo): number {
-    return this.todos.indexOf(todo);
   }
 }

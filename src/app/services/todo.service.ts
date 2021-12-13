@@ -6,6 +6,7 @@ import { Todo } from 'src/app/models/todo.model';
 })
 export class TodoService {
   todos: Todo[] = [{ id: 1, title: 'data from storage', done: false }];
+  storageName: string = 'todos';
 
   constructor() {}
 
@@ -15,26 +16,28 @@ export class TodoService {
 
   post(todo: Todo): Todo[] {
     this.todos.push(todo);
-    this.save();
+    this.saveOnStorage();
 
     return this.getTodos();
   }
 
   delete(todo: Todo): Todo[] {
-    const index = this.getTodoIndex(todo);
-    this.todos.splice(index, 1);
-    this.save();
+    const DELETE_COUNT = 1;
+    const startIdx = this.getTodoIndex(todo);
+
+    this.todos.splice(startIdx, DELETE_COUNT);
+    this.saveOnStorage();
 
     return this.getTodos();
   }
 
-  save(): void {
+  saveOnStorage(): void {
     const data = JSON.stringify(this.todos);
-    return localStorage.setItem('todos', data);
+    return localStorage.setItem(this.storageName, data);
   }
 
-  load(): void {
-    const data = localStorage.getItem('todos');
+  loadStorageData(): void {
+    const data = localStorage.getItem(this.storageName);
     if (data) {
       this.todos = JSON.parse(data);
     }

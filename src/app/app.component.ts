@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
       ],
     });
 
-    this.todoService.load();
+    this.todoService.loadStorageData();
   }
 
   ngOnInit(): void {
@@ -66,12 +66,12 @@ export class AppComponent implements OnInit {
 
   markAsDone(todo: Todo): void {
     todo.done = true;
-    this.todoService.save();
+    this.todoService.saveOnStorage();
   }
 
   markAsUndone(todo: Todo): void {
     todo.done = false;
-    this.todoService.save();
+    this.todoService.saveOnStorage();
   }
 
   clear(): void {

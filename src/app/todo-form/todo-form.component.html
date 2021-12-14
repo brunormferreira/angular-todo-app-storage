@@ -1,0 +1,15 @@
+<form [formGroup]="form">
+  <fieldset>
+    <label>Tarefa</label>
+    <input
+      type="text"
+      placeholder="Título da tarefa"
+      maxLength="60"
+      formControlName="title"
+    />
+    <small *ngIf="formValues['title'].invalid && !formValues['title'].pristine"
+      >Este campo deve conter entre 3 e 60 caracteres</small
+    >
+    <button [disabled]="form.invalid" (click)="onAddNewTodo()">Salvar</button>
+  </fieldset>
+</form>

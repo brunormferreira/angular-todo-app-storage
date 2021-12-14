@@ -1,13 +1,15 @@
-<h1>{{ title }}</h1>
+<main>
+  <h1>{{ title }}</h1>
 
-<app-todo-form (newTodo)="add($event)"></app-todo-form>
+  <app-todo-form (newTodo)="add($event)"></app-todo-form>
 
-<app-todo-list
-  *ngFor="let todo of todos"
-  [todo]="todo"
-  (remove)="remove($event)"
-  (done)="markAsDone($event)"
-  (undone)="markAsUndone($event)"
-></app-todo-list>
+  <app-todo-list
+    *ngFor="let todo of todos"
+    [todo]="todo"
+    (remove)="remove($event)"
+    (done)="markAsDone($event)"
+    (undone)="markAsUndone($event)"
+  ></app-todo-list>
 
-<app-todo-count [todos]="todos"></app-todo-count>
+  <app-todo-count [todos]="todos"></app-todo-count>
+</main>
